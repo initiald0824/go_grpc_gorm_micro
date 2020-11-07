@@ -1,2 +1,2 @@
-# protoc-gorm-curd
-Using micro/v3 rapid generation of curd by proto
+# go_grpc_gorm_micro
+rapid generation of curd through go+grpc+gorm...
