@@ -81,7 +81,7 @@ CREATE TABLE `sys_apis` (
   `method` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT 'POST',
   PRIMARY KEY (`id`),
   KEY `idx_sys_apis_deleted_at` (`deleted_at`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 ```
 
 ## 快速开始
@@ -91,10 +91,10 @@ CREATE TABLE `sys_apis` (
 3. cd cmd && go run main.go curd tableName `比如 go run main.go curd sys_apis `
 
 用grpc和protobuf实现高性能API
-1. 例如
-protoc --go_out=plugins=grpc:. sys_apis_model.proto 
+1. 例如    
+protoc --go_out=plugins=grpc:. sys_apis_model.proto    
 protoc --go_out=plugins=grpc:. --swagger_out=./proto --grpc-gateway_out=./proto sys_apis_service.proto 
-2. main.go注册我们的RPC服务
-    pb.RegisterSysApisServiceServer(grpcServer, &api.SysApis{})
-3. gRPC转换HTTP，文件地址：/lib/gateway/网关.go
-    pb.RegisterSysApisServiceHandlerFromEndpoint(ctx, gwmux, endpoint, dopts)
+2. main.go注册我们的RPC服务    
+pb.RegisterSysApisServiceServer(grpcServer, &api.SysApis{})
+3. gRPC转换HTTP，文件地址：/lib/gateway/gateway.go     
+pb.RegisterSysApisServiceHandlerFromEndpoint(ctx, gwmux, endpoint, dopts)
