@@ -15,6 +15,7 @@
 - [gorm](https://github.com/go-gorm/gorm)
 
 ## 目录结构
+```
 ├── LICENSE
 ├── README.md
 ├── api                                 // API routing
@@ -65,6 +66,7 @@
 └── service
     ├── curd.go
     ├── sys_api.go
+```
 
 ## 默认的sql文件
 ```
@@ -84,14 +86,15 @@ CREATE TABLE `sys_apis` (
 
 ## 快速开始
 步骤如下：
-1.设计MySQL数据结构表
-2.在项目文件下配置.yaml，配置MySQL、各个目录的更改并配置连接
-3.cd cmd && go run main.go curd tableName `比如 go run main.go curd sys_apis `
+1. 设计MySQL数据结构表
+2. 在项目文件下配置.yaml，配置MySQL、各个目录的更改并配置连接
+3. cd cmd && go run main.go curd tableName `比如 go run main.go curd sys_apis `
+
 用grpc和protobuf实现高性能API
-4.例如
+1. 例如
 protoc --go_out=plugins=grpc:. sys_apis_model.proto 
 protoc --go_out=plugins=grpc:. --swagger_out=./proto --grpc-gateway_out=./proto sys_apis_service.proto 
-5.main.go注册我们的RPC服务
+2. main.go注册我们的RPC服务
     pb.RegisterSysApisServiceServer(grpcServer, &api.SysApis{})
-6.gRPC转换HTTP，文件地址：/lib/gateway/网关.go
+3. gRPC转换HTTP，文件地址：/lib/gateway/网关.go
     pb.RegisterSysApisServiceHandlerFromEndpoint(ctx, gwmux, endpoint, dopts)

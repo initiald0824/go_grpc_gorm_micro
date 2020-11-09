@@ -14,6 +14,7 @@ Through the data table of the database, quickly generate the code of curd,for ex
 - [gorm](https://github.com/go-gorm/gorm)
 
 ## Directory Structure
+```
 ├── LICENSE
 ├── README.md
 ├── api                                 // API routing
@@ -64,7 +65,7 @@ Through the data table of the database, quickly generate the code of curd,for ex
 └── service
     ├── curd.go
     ├── sys_api.go
-
+```
 
 ## Default sql file
 ```
@@ -86,17 +87,17 @@ CREATE TABLE `sys_apis` (
 The steps are as follows:
 1. Design MySQL data structure table
 2. Under project file config.yaml, Configure MySQL and configure the connection
-3、cd cmd && go run main.go curd tableName `for example go run main.go curd sys_apis `
-
+3. cd cmd && go run main.go curd tableName `for example go run main.go curd sys_apis `
+   
 Implementation of high performance API using grpc and protobuf
-4.for example
+1. for example
 protoc --go_out=plugins=grpc:. sys_apis_model.proto 
 protoc --go_out=plugins=grpc:. --swagger_out=./proto --grpc-gateway_out=./proto sys_apis_service.proto 
 
-5.main.go Sign up for our RPC service
+2. main.go Sign up for our RPC service
 	pb.RegisterSysApisServiceServer(grpcServer, &api.SysApis{})
 
-6.gRPC convert HTTP，for example /lib/gateway/gateway.go
+3. gRPC convert HTTP，for example /lib/gateway/gateway.go
 pb.RegisterSysApisServiceHandlerFromEndpoint(ctx, gwmux, endpoint, dopts)
 
 	
