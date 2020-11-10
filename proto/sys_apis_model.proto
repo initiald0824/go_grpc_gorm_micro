@@ -1,0 +1,34 @@
+syntax = "proto3";
+
+package sys_apis;
+import public "google/protobuf/timestamp.proto";
+option go_package = "proto;proto";
+
+// 注意1、字段必须是小写，要不然http转换rpc，inject_tag json也没用
+// 注意2、google.protobuf.Timestamp  在xxx.micro.go中没用用到，需要删除，要不然服务启动不起来
+// 注意3、要记得生成注解 protoc-go-inject-tag -input=./proto/sys_api_model.pb.go
+// protoc --go_out=plugins=grpc:. --micro_out=plugins=grpc:. --go-grpc_out=. --swagger_out=logtostderr=true:./proto --grpc-gateway_out=logtostderr=true:./proto sys_api_model.proto
+// protoc --go_out=plugins=grpc:. --swagger_out=./proto --grpc-gateway_out=./proto sys_api_service.proto
+// protoc --go_out=plugins=grpc:. sys_apis_model.proto
+// protoc --go_out=plugins=grpc:. --swagger_out=./proto --grpc-gateway_out=./proto sys_apis_service.proto
+message SysApis {
+   // @inject_tag: gorm:"primary_key;AUTO_INCREMENT"
+   int64 id = 101;
+
+   // @inject_tag: json:"path" gorm:"comment:api路径"
+   string path = 102;
+   // @inject_tag: json:"description" gorm:"comment:api中文描述"
+   string description = 103;
+   // @inject_tag: json:"apiGroup" gorm:"comment:api组"
+   string apiGroup = 104;
+   // @inject_tag: json:"method" gorm:"default:POST" gorm:"comment:方法"
+   string method = 105;
+
+   // @inject_tag: json:"createAt"
+   google.protobuf.Timestamp createdAt = 106;
+   // @inject_tag: json:"updateAt"
+   google.protobuf.Timestamp updatedAt = 107;
+   // @inject_tag: gorm:"index" json:"-"
+   google.protobuf.Timestamp deletedAt = 108;
+
+}

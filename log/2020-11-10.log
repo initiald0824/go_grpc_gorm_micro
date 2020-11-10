@@ -1,0 +1,18 @@
+[go_grpc_gorm_micro]2020/11/10 - 16:20:06.035	[34minfo[0m	mysql连接成功
+[go_grpc_gorm_micro]2020/11/10 - 16:20:06.035	[34minfo[0m	[core]parsed scheme: ""	{"system": "grpc", "grpc_log": true}
+[go_grpc_gorm_micro]2020/11/10 - 16:20:06.035	[34minfo[0m	[core]scheme "" not registered, fallback to default scheme	{"system": "grpc", "grpc_log": true}
+[go_grpc_gorm_micro]2020/11/10 - 16:20:06.035	[34minfo[0m	[core]ccResolverWrapper: sending update to cc: {[{127.0.0.1:8100  <nil> 0 <nil>}] <nil> <nil>}	{"system": "grpc", "grpc_log": true}
+[go_grpc_gorm_micro]2020/11/10 - 16:20:06.035	[34minfo[0m	[core]ClientConn switching balancer to "pick_first"	{"system": "grpc", "grpc_log": true}
+[go_grpc_gorm_micro]2020/11/10 - 16:20:06.036	[34minfo[0m	[core]Channel switches to new LB policy "pick_first"	{"system": "grpc", "grpc_log": true}
+[go_grpc_gorm_micro]2020/11/10 - 16:20:06.036	[34minfo[0m	[core]Subchannel Connectivity change to CONNECTING	{"system": "grpc", "grpc_log": true}
+[go_grpc_gorm_micro]2020/11/10 - 16:20:06.036	[34minfo[0m	[core]pickfirstBalancer: UpdateSubConnState: 0xc00040a810, {CONNECTING <nil>}	{"system": "grpc", "grpc_log": true}
+[go_grpc_gorm_micro]2020/11/10 - 16:20:06.036	[34minfo[0m	[core]Subchannel picks a new address "127.0.0.1:8100" to connect	{"system": "grpc", "grpc_log": true}
+[go_grpc_gorm_micro]2020/11/10 - 16:20:06.036	[34minfo[0m	[core]Channel Connectivity change to CONNECTING	{"system": "grpc", "grpc_log": true}
+[go_grpc_gorm_micro]2020/11/10 - 16:20:06.040	[34minfo[0m	[core]Subchannel Connectivity change to READY	{"system": "grpc", "grpc_log": true}
+[go_grpc_gorm_micro]2020/11/10 - 16:20:06.040	[34minfo[0m	[core]pickfirstBalancer: UpdateSubConnState: 0xc00040a810, {READY <nil>}	{"system": "grpc", "grpc_log": true}
+[go_grpc_gorm_micro]2020/11/10 - 16:20:06.040	[34minfo[0m	[core]Channel Connectivity change to READY	{"system": "grpc", "grpc_log": true}
+[go_grpc_gorm_micro]2020/11/10 - 16:20:14.563	[34minfo[0m	finished unary call with code OK	{"grpc.start_time": "2020-11-10T16:20:14+08:00", "system": "grpc", "span.kind": "server", "grpc.service": "sys_apis.SysApisService", "grpc.method": "Lists", "grpc.code": "OK", "grpc.time_ms": 2.3410000801086426}
+[go_grpc_gorm_micro]2020/11/10 - 16:20:19.156	[34minfo[0m	finished unary call with code OK	{"grpc.start_time": "2020-11-10T16:20:19+08:00", "system": "grpc", "span.kind": "server", "grpc.service": "sys_apis.SysApisService", "grpc.method": "Find", "grpc.code": "OK", "grpc.time_ms": 0.949999988079071}
+[go_grpc_gorm_micro]2020/11/10 - 16:20:21.469	[31merror[0m	finished unary call with code Unknown	{"grpc.start_time": "2020-11-10T16:20:21+08:00", "system": "grpc", "span.kind": "server", "grpc.service": "sys_apis.SysApisService", "grpc.method": "Delete", "error": "record not found", "grpc.code": "Unknown", "grpc.time_ms": 1.0679999589920044}
+[go_grpc_gorm_micro]2020/11/10 - 16:20:24.152	[31merror[0m	finished unary call with code Unknown	{"grpc.start_time": "2020-11-10T16:20:24+08:00", "system": "grpc", "span.kind": "server", "grpc.service": "sys_apis.SysApisService", "grpc.method": "Create", "error": "重复创建～", "grpc.code": "Unknown", "grpc.time_ms": 1.0449999570846558}
+[go_grpc_gorm_micro]2020/11/10 - 16:20:30.899	[34minfo[0m	finished unary call with code OK	{"grpc.start_time": "2020-11-10T16:20:30+08:00", "system": "grpc", "span.kind": "server", "grpc.service": "sys_apis.SysApisService", "grpc.method": "Find", "grpc.code": "OK", "grpc.time_ms": 1.274999976158142}

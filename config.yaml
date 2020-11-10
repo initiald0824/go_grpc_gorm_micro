@@ -1,0 +1,31 @@
+# system configuration
+system:
+  env: 'develop'  # develop、public
+  db-type: 'mysql'
+  network: 'tcp'
+  address: '127.0.0.1:8100'
+  tls-key: '/Users/zl/go/src/my/go_grpc_gorm_micro/lib/tls/server.key'
+  tls-pem: '/Users/zl/go/src/my/go_grpc_gorm_micro/lib/tls/server.pem'
+  director: '/Users/zl/go/src/my/go_grpc_gorm_micro/'
+
+# mysql configuration
+mysql:
+  path: '127.0.0.1:3306'
+  config: 'charset=utf8mb4&parseTime=True&loc=Local'
+  db-name: 'protoc_gorm_curd'
+  username: 'root'
+  password: 'root'
+  max-idle-conns: 10
+  max-open-conns: 10
+  log-mode: true
+
+zap:
+  level: 'info'
+  format: 'console'
+  prefix: '[go_grpc_gorm_micro]'
+  director: '/Users/zl/go/src/my/go_grpc_gorm_micro/log/'
+  link-name: 'latest_log'
+  show-line: true
+  encode-level: 'LowercaseColorLevelEncoder'
+  stacktrace-key: 'stacktrace'
+  log-in-console: true
