@@ -115,6 +115,16 @@ func Ucfirst(str string) string {
 	return ""
 }
 
+// 下划线写法转为驼峰写法并且首字母大写
+func Case2CamelAndUcfirst(name string) string {
+	return Ucfirst(Case2Camel(name))
+}
+
+// 下划线写法转为驼峰写法并且首字母小写
+func Case2CamelAndLcfirst(name string) string {
+	return Lcfirst(Case2Camel(name))
+}
+
 // 首字母小写
 func Lcfirst(str string) string {
 	for i, v := range str {

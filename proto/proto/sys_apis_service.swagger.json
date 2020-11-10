@@ -209,8 +209,8 @@
       "type": "object",
       "properties": {
         "total": {
-          "type": "integer",
-          "format": "int32"
+          "type": "string",
+          "format": "int64"
         }
       }
     },
@@ -318,40 +318,41 @@
         "id": {
           "type": "string",
           "format": "int64",
-          "title": "@inject_tag: json:\"id\" gorm:\"primary_key;AUTO_INCREMENT;default:;comment:;size:20;\""
-        },
-        "created_at": {
-          "type": "string",
-          "format": "date-time",
-          "title": "@inject_tag: json:\"created_at\" gorm:\"default:;comment:;\""
-        },
-        "updated_at": {
-          "type": "string",
-          "format": "date-time",
-          "title": "@inject_tag: json:\"updated_at\" gorm:\"default:;comment:;\""
-        },
-        "deleted_at": {
-          "type": "string",
-          "format": "date-time",
-          "title": "@inject_tag: json:\"deleted_at\" gorm:\"default:;comment:;\""
+          "title": "@inject_tag: gorm:\"primary_key;AUTO_INCREMENT\""
         },
         "path": {
           "type": "string",
-          "title": "@inject_tag: json:\"path\" gorm:\"default:api路径;comment:api路径;size:191;\""
+          "title": "@inject_tag: json:\"path\" gorm:\"comment:api路径\""
         },
         "description": {
           "type": "string",
-          "title": "@inject_tag: json:\"description\" gorm:\"default:api中文描述;comment:api中文描述;size:191;\""
+          "title": "@inject_tag: json:\"description\" gorm:\"comment:api中文描述\""
         },
-        "api_group": {
+        "apiGroup": {
           "type": "string",
-          "title": "@inject_tag: json:\"api_group\" gorm:\"default:api组;comment:api组;size:191;\""
+          "title": "@inject_tag: json:\"apiGroup\" gorm:\"comment:api组\""
         },
         "method": {
           "type": "string",
-          "title": "@inject_tag: json:\"method\" gorm:\"default:;comment:;size:191;\""
+          "title": "@inject_tag: json:\"method\" gorm:\"default:POST\" gorm:\"comment:方法\""
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "title": "@inject_tag: json:\"createAt\""
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time",
+          "title": "@inject_tag: json:\"updateAt\""
+        },
+        "deletedAt": {
+          "type": "string",
+          "format": "date-time",
+          "title": "@inject_tag: gorm:\"index\" json:\"-\""
         }
-      }
+      },
+      "title": "注意1、字段必须是小写，要不然http转换rpc，inject_tag json也没用\n注意2、google.protobuf.Timestamp  在xxx.micro.go中没用用到，需要删除，要不然服务启动不起来\n注意3、要记得生成注解 protoc-go-inject-tag -input=./proto/sys_api_model.pb.go\nprotoc --go_out=plugins=grpc:. --micro_out=plugins=grpc:. --go-grpc_out=. --swagger_out=logtostderr=true:./proto --grpc-gateway_out=logtostderr=true:./proto sys_api_model.proto\nprotoc --go_out=plugins=grpc:. --swagger_out=./proto --grpc-gateway_out=./proto sys_api_service.proto\nprotoc --go_out=plugins=grpc:. sys_apis_model.proto\nprotoc --go_out=plugins=grpc:. --swagger_out=./proto --grpc-gateway_out=./proto sys_apis_service.proto"
     }
   }
 }

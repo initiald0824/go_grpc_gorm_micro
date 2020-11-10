@@ -14,7 +14,8 @@ func CreateSysApis(req *proto.SysApis) (*proto.SysApis, error) {
 	data := req
 
 	//
-	if !errors.Is(global.CURD_DB.Where("path = ? AND method = ?", req.Path, req.Method).First(&proto.SysApis{}).Error, gorm.ErrRecordNotFound) {
+	if !errors.Is(global.CURD_DB.Where(&req).First(&proto.SysApis{}).Error, gorm.ErrRecordNotFound) {
+	//if !errors.Is(global.CURD_DB.Where("path = ? AND method = ?", req.Path, req.Method).First(&proto.SysApis{}).Error, gorm.ErrRecordNotFound) {
 		return data, errors.New("重复创建～")
 	}
 
@@ -43,12 +44,7 @@ func FindSysApis(req *proto.SysApis) (*proto.SysApis, error) {
 	return req, err
 }
 
-func GetListSysApis(req *proto.Request) (*proto.Responses, error) {
-	meta := &proto.Meta{Total:0} // 需要进行初始化
-
-	rsp := &proto.Responses{}
-	rsp.Meta = meta
-
+func GetListSysApis(req *proto.Request) (result []*proto.SysApis, total int64, err error) {
 	if req.PageSize == 0 {
 		req.PageSize = constant.PAGESIZE
 	}
@@ -58,10 +54,9 @@ func GetListSysApis(req *proto.Request) (*proto.Responses, error) {
 	limit := req.PageSize
 	offset := req.PageSize * (req.Page - 1)
 
-	unmarshal := &proto.SysApis{}
-	err := ptypes.UnmarshalAny(req.Query, unmarshal)
-
-	db := global.CURD_DB.Model(&rsp.Data)
+    unmarshal := &proto.SysApis{}
+	err = ptypes.UnmarshalAny(req.Query, unmarshal)
+	db := global.CURD_DB.Model(&result)
 
 	if unmarshal.Path != "" {
 		db = db.Where("path LIKE ?", "%"+unmarshal.Path+"%")
@@ -79,10 +74,10 @@ func GetListSysApis(req *proto.Request) (*proto.Responses, error) {
 		db = db.Where("api_group = ?", unmarshal.ApiGroup)
 	}
 
-	err = db.Count(&rsp.Meta.Total).Error
+	err = db.Count(&total).Error
 
 	if err != nil {
-		return rsp, err
+		return result, total, err
 	} else {
 		db = db.Limit(limit).Offset(offset)
 		if req.OrderKey != "" {
@@ -92,13 +87,13 @@ func GetListSysApis(req *proto.Request) (*proto.Responses, error) {
 			} else {
 				OrderStr = req.OrderKey
 			}
-			err = db.Order(OrderStr).Find(&rsp.Data).Error
+			err = db.Order(OrderStr).Find(&result).Error
 		} else {
-			err = db.Order("id").Find(&rsp.Data).Error
+			err = db.Order("id").Find(&result).Error
 		}
 	}
 
-	return rsp, err
+	return result, total, err
 }
 
 func FindByPathSysApi(req *proto.SysApis) (*proto.SysApis, error) {

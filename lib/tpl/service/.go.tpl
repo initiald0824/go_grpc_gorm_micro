@@ -11,16 +11,15 @@ import (
 
 func Create{{.ModelName}}(req *proto.{{.ModelName}}) (*proto.{{.ModelName}}, error) {
 	// validator校验
-	data := req
 
 	//
-	if !errors.Is(global.CURD_DB.Where("path = ? AND method = ?", req.Path, req.Method).First(&proto.{{.ModelName}}{}).Error, gorm.ErrRecordNotFound) {
-		return data, errors.New("重复创建～")
+	if !errors.Is(global.CURD_DB.Where(req).First(&proto.{{.ModelName}}{}).Error, gorm.ErrRecordNotFound) {
+		return req, errors.New("重复创建～")
 	}
 
 	//
 	err := global.CURD_DB.Create(&req).Error
-	return data, err
+	return req, err
 }
 
 func Delete{{.ModelName}}(req *proto.{{.ModelName}}) (*proto.{{.ModelName}}, error) {
@@ -43,12 +42,7 @@ func Find{{.ModelName}}(req *proto.{{.ModelName}}) (*proto.{{.ModelName}}, error
 	return req, err
 }
 
-func GetList{{.ModelName}}(req *proto.Request) (*proto.Responses, error) {
-	meta := &proto.Meta{Total:0} // 需要进行初始化
-
-	rsp := &proto.Responses{}
-	rsp.Meta = meta
-
+func GetList{{.ModelName}}(req *proto.Request) (result []*proto.{{.ModelName}}, total int64, err error) {
 	if req.PageSize == 0 {
 		req.PageSize = constant.PAGESIZE
 	}
@@ -58,31 +52,36 @@ func GetList{{.ModelName}}(req *proto.Request) (*proto.Responses, error) {
 	limit := req.PageSize
 	offset := req.PageSize * (req.Page - 1)
 
-	unmarshal := &proto.{{.ModelName}}{}
-	err := ptypes.UnmarshalAny(req.Query, unmarshal)
+    unmarshal := &proto.{{.ModelName}}{}
+	err = ptypes.UnmarshalAny(req.Query, unmarshal)
+	db := global.CURD_DB.Model(&result)
+    {{range $i, $v := .Fields}}
+    {{if eq $v.DataType "varchar"}}
+    if unmarshal.{{case2CamelAndUcfirst $v.ColumnName}} != "" {
+        db = db.Where("{{$v.ColumnName}} LIKE ?", "%"+unmarshal.{{case2CamelAndUcfirst $v.ColumnName}}+"%")
+    }
+    {{else if eq $v.DataType "char"}}
+    if unmarshal.{{case2CamelAndUcfirst $v.ColumnName}} != "" {
+            db = db.Where("{{$v.ColumnName}} LIKE ?", "%"+unmarshal.{{case2CamelAndUcfirst $v.ColumnName}}+"%")
+    }
+    {{else if eq $v.DataType "timestamp"}}
+    if unmarshal.{{case2CamelAndUcfirst $v.ColumnName}} != nil {
+            db = db.Where("{{$v.ColumnName}} = ?", unmarshal.{{case2CamelAndUcfirst $v.ColumnName}})
+    }
+    {{else if eq $v.DataType "text"}}
+    if unmarshal.{{case2CamelAndUcfirst $v.ColumnName}} != "" {
+            db = db.Where("{{$v.ColumnName}} LIKE ?", "%"+unmarshal.{{case2CamelAndUcfirst $v.ColumnName}}+"%")
+    }{{else}}
+    if unmarshal.{{case2CamelAndUcfirst $v.ColumnName}} != 0 {
+            db = db.Where("{{$v.ColumnName}} = ?", unmarshal.{{case2CamelAndUcfirst $v.ColumnName}})
+    }
+    {{end}}
+    {{end}}
 
-	db := global.CURD_DB.Model(&rsp.Data)
-
-	if unmarshal.Path != "" {
-		db = db.Where("path LIKE ?", "%"+unmarshal.Path+"%")
-	}
-
-	if unmarshal.Description != "" {
-		db = db.Where("description LIKE ?", "%"+unmarshal.Description+"%")
-	}
-
-	if unmarshal.Method != "" {
-		db = db.Where("method = ?", unmarshal.Method)
-	}
-
-	if unmarshal.ApiGroup != "" {
-		db = db.Where("api_group = ?", unmarshal.ApiGroup)
-	}
-
-	err = db.Count(&rsp.Meta.Total).Error
+	err = db.Count(&total).Error
 
 	if err != nil {
-		return rsp, err
+		return result, total, err
 	} else {
 		db = db.Limit(limit).Offset(offset)
 		if req.OrderKey != "" {
@@ -92,13 +91,13 @@ func GetList{{.ModelName}}(req *proto.Request) (*proto.Responses, error) {
 			} else {
 				OrderStr = req.OrderKey
 			}
-			err = db.Order(OrderStr).Find(&rsp.Data).Error
+			err = db.Order(OrderStr).Find(&result).Error
 		} else {
-			err = db.Order("id").Find(&rsp.Data).Error
+			err = db.Order("id").Find(&result).Error
 		}
 	}
 
-	return rsp, err
+	return result, total, err
 }
 
 

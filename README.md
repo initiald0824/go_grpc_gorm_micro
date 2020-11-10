@@ -87,8 +87,8 @@ CREATE TABLE `sys_apis` (
 ## 快速开始
 步骤如下：
 1. 设计MySQL数据结构表
-2. 在项目文件下配置.yaml，配置MySQL、各个目录的更改并配置连接
-3. cd cmd && go run main.go curd tableName `比如 go run main.go curd sys_apis `
+2. 修改go_grpc_gorm_micro/lib/constant/constant.go,在项目文件下配置.yaml，配置MySQL、各个目录的更改并配置连接
+3. cd cmd && go run main.go curd -t tableName `比如 go run main.go curd -t sys_apis `
 
 用grpc和protobuf实现高性能API
 1. 例如    

@@ -27,6 +27,10 @@ func createTemp(tplFileList []string, templateStruct model.TemplateStruct) (err 
 	add := func (params int)(int, error) {
 		return 100+params, nil
 	}
+	// 定义首字母小写
+	case2CamelAndLcfirst := utils.Case2CamelAndLcfirst
+	// 定义首字母大写
+	case2CamelAndUcfirst := utils.Case2CamelAndUcfirst
 
 	// 根据文件路径生成 tplData 结构体，待填充数据
 	for _, value := range tplFileList {
@@ -40,7 +44,7 @@ func createTemp(tplFileList []string, templateStruct model.TemplateStruct) (err 
 			return err
 		}
 
-		dataList[index].template, err = template.New("").Funcs(template.FuncMap{"add": add}).Parse(string(textByte))
+		dataList[index].template, err = template.New("").Funcs(template.FuncMap{"add": add,"case2CamelAndLcfirst":case2CamelAndLcfirst,"case2CamelAndUcfirst":case2CamelAndUcfirst}).Parse(string(textByte))
 		if err != nil {
 			return err
 		}

@@ -17,18 +17,18 @@ message Request {
 
 message Response {
   int32 code = 201;
-  string msg = 202;
+  string message = 202;
   google.protobuf.Any data = 203;
   Meta meta = 204;
 }
 
 message Responses {
   int32 code = 201;
-  string msg = 202;
+  string message = 202;
   repeated google.protobuf.Any data = 203;
   Meta meta = 204;
 }
 
 message Meta {
-  int32 total = 101;
+  int64 total = 101;
 }

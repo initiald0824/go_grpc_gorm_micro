@@ -86,8 +86,8 @@ CREATE TABLE `sys_apis` (
 ## Getting started
 The steps are as follows:
 1. Design MySQL data structure table
-2. Under project file config.yaml, Configure MySQL and configure the connection
-3. cd cmd && go run main.go curd tableName `for example go run main.go curd sys_apis `
+2. Edit go_grpc_gorm_micro/lib/constant/constant.go, Under project file config.yaml, Configure MySQL and configure the connection
+3. cd cmd && go run main.go curd -t tableName `for example go run main.go curd -t sys_apis `
    
 Implementation of high performance API using grpc and protobuf
 1. for example
