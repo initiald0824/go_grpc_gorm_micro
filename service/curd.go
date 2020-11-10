@@ -49,13 +49,8 @@ func createTemp(tplFileList []string, templateStruct model.TemplateStruct) (err 
 			return err
 		}
 	}
-	//
-	//fmt.Println(dataList)
-	//return
 
-	// 生成文件路径，填充 autoCodePath 字段，readme.txt.tpl不符合规则，需要特殊处理
-	// resource/template/fe/api.js.tpl -> autoCode/fe/autoCode.PackageName/api/autoCode.PackageName.js
-	// resource/template/readme.txt.tpl -> autoCode/readme.txt
+	// 生成文件路径，填充 autoCodePath 字段
 	for index, value := range dataList {
 		trimBase := strings.TrimPrefix(value.locationPath, basePath)
 		if lastSeparator := strings.LastIndex(trimBase, "/"); lastSeparator != -1 {
@@ -66,9 +61,6 @@ func createTemp(tplFileList []string, templateStruct model.TemplateStruct) (err 
 			}
 		}
 	}
-
-	//fmt.Println(dataList)
-	//return
 
 	// 生成文件
 	for _, value := range dataList {
