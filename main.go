@@ -24,6 +24,7 @@ import (
 )
 
 func main() {
+	// nacos
 
 	// 监听本地端口
 	listener, err := net.Listen(global.CURD_CONFIG.System.Network, global.CURD_CONFIG.System.Address)
