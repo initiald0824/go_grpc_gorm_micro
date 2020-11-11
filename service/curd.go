@@ -50,7 +50,7 @@ func createTemp(tplFileList []string, templateStruct model.TemplateStruct) (err 
 		}
 	}
 
-	// 生成文件路径，填充 autoCodePath 字段，readme.txt.tpl不符合规则，需要特殊处理
+	// 生成文件路径，填充 autoCodePath 字段
 	for index, value := range dataList {
 		trimBase := strings.TrimPrefix(value.locationPath, basePath)
 		if lastSeparator := strings.LastIndex(trimBase, "/"); lastSeparator != -1 {
