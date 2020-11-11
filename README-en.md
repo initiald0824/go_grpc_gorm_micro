@@ -1,5 +1,11 @@
 English | [简体中文](./README.md)简体中文
 
+## Getting started
+Using grpc and protobuf to realize high performance API, The steps are as follows:
+1. git clone https://github.com/arrayhua/go_grpc_gorm_micro.git && Design MySQL data structure table
+2. Edit go_grpc_gorm_micro/lib/constant/constant.go, Under project file config.yaml, Configure MySQL and configure the connection
+3. ./curd.sh tableName 比如`./curd.sh users`
+
 # go_grpc_gorm_micro
 Through go + grpc + proto + Gorm... Quickly generate curd code, and has divided the project structure, see the directory structure for details
 The general system architecture is as follows:
@@ -86,9 +92,3 @@ CREATE TABLE `sys_apis` (
   KEY `idx_sys_apis_deleted_at` (`deleted_at`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 ```
-
-## Getting started
-Using grpc and protobuf to realize high performance API, The steps are as follows:
-1. Design MySQL data structure table
-2. Edit go_grpc_gorm_micro/lib/constant/constant.go, Under project file config.yaml, Configure MySQL and configure the connection
-3. ./curd.sh tableName 比如`./curd.sh users`

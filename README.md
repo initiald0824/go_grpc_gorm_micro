@@ -1,5 +1,11 @@
 [English](./README-en.md) | 简体中文
 
+## 快速开始
+用grpc和protobuf实现高性能API，步骤如下：
+1. git clone https://github.com/arrayhua/go_grpc_gorm_micro.git && 设计MySQL数据结构表
+2. 修改go_grpc_gorm_micro/lib/constant/constant.go,在项目文件下配置config.yaml，配置MySQL、各个目录的更改并配置连接
+3. ./curd.sh tableName 比如`./curd.sh users`
+
 # go_grpc_gorm_micro
 通过go+grpc+proto+gorm...快速生成curd代码，并已经划分好了项目结构，详见目录结构
 大致系统架构图如下
@@ -90,9 +96,3 @@ CREATE TABLE `sys_apis` (
   KEY `idx_sys_apis_deleted_at` (`deleted_at`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 ```
-
-## 快速开始
-用grpc和protobuf实现高性能API，步骤如下：
-1. 设计MySQL数据结构表
-2. 修改go_grpc_gorm_micro/lib/constant/constant.go,在项目文件下配置config.yaml，配置MySQL、各个目录的更改并配置连接
-3. ./curd.sh tableName 比如`./curd.sh users`
