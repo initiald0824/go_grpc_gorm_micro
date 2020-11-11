@@ -2,12 +2,19 @@
 
 # go_grpc_gorm_micro
 通过go+grpc+proto+gorm...快速生成curd代码，并已经划分好了项目结构，详见目录结构
+大致系统架构图如下
+<div align=center>
+<img src="https://github.com/arrayhua/go_grpc_gorm_micro/curd.png" width=300" height="300" />
+</div>
 
 ## Overview
 通过数据库的数据表快速生成增删改查代码，比如通过：`mysql`.
 
 
 ## Dependent
+```
+ps:不要认为依赖项很多，觉得是需要全部掌握才可以上手哦。其实只需要懂MVC和GO语言基础即可完成业务需求。
+```
 - [protoc](https://github.com/google/protobuf)
 - [protoc-gen-go](https://github.com/golang/protobuf)
 - [cobra](https://github.com/spf13/cobra)
@@ -85,16 +92,7 @@ CREATE TABLE `sys_apis` (
 ```
 
 ## 快速开始
-步骤如下：
+用grpc和protobuf实现高性能API，步骤如下：
 1. 设计MySQL数据结构表
-2. 修改go_grpc_gorm_micro/lib/constant/constant.go,在项目文件下配置.yaml，配置MySQL、各个目录的更改并配置连接
-3. cd cmd && go run main.go curd -t tableName `比如 go run main.go curd -t sys_apis `
-
-用grpc和protobuf实现高性能API
-1. 例如    
-protoc --go_out=plugins=grpc:. sys_apis_model.proto    
-protoc --go_out=plugins=grpc:. --swagger_out=./proto --grpc-gateway_out=./proto sys_apis_service.proto 
-2. main.go注册我们的RPC服务    
-pb.RegisterSysApisServiceServer(grpcServer, &api.SysApis{})
-3. gRPC转换HTTP，文件地址：/lib/gateway/gateway.go     
-pb.RegisterSysApisServiceHandlerFromEndpoint(ctx, gwmux, endpoint, dopts)
+2. 修改go_grpc_gorm_micro/lib/constant/constant.go,在项目文件下配置config.yaml，配置MySQL、各个目录的更改并配置连接
+3. ./curd.sh tableName 比如`./curd.sh users`

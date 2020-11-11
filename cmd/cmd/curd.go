@@ -40,7 +40,7 @@ var curdCmd = &cobra.Command{
 			return
 		}
 
-		fmt.Printf("tableName generate success")
+		fmt.Println("tableName generate success")
 	},
 }
 

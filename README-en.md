@@ -2,6 +2,10 @@ English | [简体中文](./README.md)简体中文
 
 # go_grpc_gorm_micro
 Through go + grpc + proto + Gorm... Quickly generate curd code, and has divided the project structure, see the directory structure for details
+The general system architecture is as follows:
+<div align=center>
+<img src="https://github.com/arrayhua/go_grpc_gorm_micro/curd.png" width=300" height="300" />
+</div>
 
 ## Overview
 Through the data table of the database, quickly generate the code of curd,for example:`mysql`.
@@ -84,20 +88,7 @@ CREATE TABLE `sys_apis` (
 ```
 
 ## Getting started
-The steps are as follows:
+Using grpc and protobuf to realize high performance API, The steps are as follows:
 1. Design MySQL data structure table
 2. Edit go_grpc_gorm_micro/lib/constant/constant.go, Under project file config.yaml, Configure MySQL and configure the connection
-3. cd cmd && go run main.go curd -t tableName `for example go run main.go curd -t sys_apis `
-   
-Implementation of high performance API using grpc and protobuf
-1. for example
-protoc --go_out=plugins=grpc:. sys_apis_model.proto 
-protoc --go_out=plugins=grpc:. --swagger_out=./proto --grpc-gateway_out=./proto sys_apis_service.proto 
-
-2. main.go Sign up for our RPC service
-	pb.RegisterSysApisServiceServer(grpcServer, &api.SysApis{})
-
-3. gRPC convert HTTP，for example /lib/gateway/gateway.go
-pb.RegisterSysApisServiceHandlerFromEndpoint(ctx, gwmux, endpoint, dopts)
-
-	
+3. ./curd.sh tableName 比如`./curd.sh users`
